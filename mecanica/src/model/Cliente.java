@@ -13,6 +13,14 @@ public class Cliente extends Pessoa{
         this.endereco = endereco;
         this.veiculos = veiculos;
     }
+    
+    public void adicionarVeiculo(Veiculo veiculo) {
+        this.veiculos.add(veiculo);
+    }
+
+    public boolean removerVeiculoPorPlaca(String placa) {
+    return this.veiculos.removeIf(v -> v.getPlaca().equals(placa));
+    }
 
     public String getEndereco() {return endereco;}
     public void setEndereco(String endereco) {this.endereco = endereco;}

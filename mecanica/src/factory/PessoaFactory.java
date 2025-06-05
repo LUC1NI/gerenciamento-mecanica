@@ -9,7 +9,7 @@ import util.Validador;
 
 public class PessoaFactory {
     public Funcionario criarFuncionario(String nome, String cpf, String telefone, String cargo, float salario,
-            List<Veiculo> veiculosResponsaveis) {
+            List<Veiculo> veiculosResponsaveis) throws ValorInvalidoException{
         Validador.validaNome(nome);
         Validador.validaCpf(cpf);
         Validador.validarTelefone(telefone);
@@ -18,7 +18,7 @@ public class PessoaFactory {
         return new Funcionario(nome, cpf, telefone, cargo, salario, veiculosResponsaveis);
     }
 
-    public Cliente criarCliente(String nome, String cpf, String telefone, String endereco, List<Veiculo> veiculos) {
+    public Cliente criarCliente(String nome, String cpf, String telefone, String endereco, List<Veiculo> veiculos) throws ValorInvalidoException{
         Validador.validaNome(nome);
         Validador.validaCpf(cpf);
         Validador.validarTelefone(telefone);
@@ -27,13 +27,13 @@ public class PessoaFactory {
         return new Cliente(nome, cpf, telefone, endereco, veiculos);
     }
 
-    private static void validaSalario(float salario) {
+    private static void validaSalario(float salario) throws ValorInvalidoException{
         if (salario < 1518.00f) {
             throw new ValorInvalidoException("Salário deve ser maior ou igual a R$ " + 1518.00f);
         }
     }
 
-    private static void validaListaVeiculos(List<Veiculo> veiculos, String nome) {
+    private static void validaListaVeiculos(List<Veiculo> veiculos, String nome) throws ValorInvalidoException{
         if (veiculos == null || veiculos.isEmpty()) {
             throw new ValorInvalidoException(nome + " deve possuir ao menos um veículo.");
         }

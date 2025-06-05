@@ -1,6 +1,6 @@
 package exception; 
 
-public class ValorInvalidoException extends RuntimeException {
+public class ValorInvalidoException extends Exception {
     public ValorInvalidoException(String mensagem) {
         super(mensagem);
     }

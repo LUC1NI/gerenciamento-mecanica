@@ -36,16 +36,11 @@ public class Carro extends Veiculo{
         return custoBase;
     }
 
-    @Override
-    public String descricaoVeiculo() {
-        return "Carro: " + getMarca() + " " + getModelo() + ", Tração: " + tracao + ", Motor: " + motor + "L";
-    }
-
     public String descricaoVeiculo(boolean detalhada) {
-        if (detalhada) {
-            return descricaoVeiculo(); 
-        } else {
-            return getMarca() + " " + getModelo() + " (" + getPlaca() + ")";
+    if (detalhada) {
+        return descricaoVeiculo();
+    } else {
+        return getMarca() + " " + getModelo() + " - " + getPlaca();
         }
     }
 
@@ -68,4 +63,5 @@ public class Carro extends Veiculo{
             ", combustivel=" + getTipoCombustivel() +
             '}';
     }
+
 }

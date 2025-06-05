@@ -9,7 +9,7 @@ import model.enums.TipoServico;
 import util.Validador;
 
 public class VeiculoFactory {
-    public Carro criarCarro(boolean arCondicionado, boolean automatico, float motor, String tracao, int ano, String cor, String marca, String modelo, String placa, StatusServico status, TipoCombustivel tipoCombustivel, TipoServico tipoServico){
+    public Carro criarCarro(boolean arCondicionado, boolean automatico, float motor, String tracao, int ano, String cor, String marca, String modelo, String placa, StatusServico status, TipoCombustivel tipoCombustivel, TipoServico tipoServico) throws ValorInvalidoException{
         validaAno(ano);
         Validador.validaStringNaoVazia(cor, "Cor");
         Validador.validaStringNaoVazia(marca, "Marca");
@@ -21,7 +21,7 @@ public class VeiculoFactory {
         return new Carro(arCondicionado, automatico, motor, tracao, ano, cor, marca, modelo, placa, status, tipoCombustivel, tipoServico);
     }
 
-    public Moto criarMoto(boolean carda, int cilindradas, boolean freioABS, int numMarchas, boolean partidaEletrica, int ano, String cor, String marca, String modelo, String placa, StatusServico status, TipoCombustivel tipoCombustivel, TipoServico tipoServico){
+    public Moto criarMoto(boolean carda, int cilindradas, boolean freioABS, int numMarchas, boolean partidaEletrica, int ano, String cor, String marca, String modelo, String placa, StatusServico status, TipoCombustivel tipoCombustivel, TipoServico tipoServico) throws ValorInvalidoException{
         validaAno(ano);
         validaCilindradas(cilindradas);
         validaMarchas(numMarchas);
@@ -33,19 +33,19 @@ public class VeiculoFactory {
         return new Moto(carda, cilindradas, freioABS, numMarchas, partidaEletrica, ano, cor, marca, modelo, placa, status, tipoCombustivel, tipoServico);
     }
 
-    private void validaAno(int ano) {
+    private void validaAno(int ano) throws ValorInvalidoException{
         if (ano < 1900 || ano > 2026) {
             throw new ValorInvalidoException("Ano do veículo inválido: " + ano);
         }
     }
 
-    private void validaMotor(float motor) {
+    private void validaMotor(float motor) throws ValorInvalidoException{
         if (motor <= 0.0f) {
             throw new ValorInvalidoException("Motor deve ter valor maior que zero.");
         }
     }
 
-    private void validaEnums(StatusServico status, TipoCombustivel combustivel, TipoServico servico) {
+    private void validaEnums(StatusServico status, TipoCombustivel combustivel, TipoServico servico) throws ValorInvalidoException{
         if (status == null) {
             throw new ValorInvalidoException("Status do serviço não pode ser nulo.");
         }
@@ -57,13 +57,13 @@ public class VeiculoFactory {
         }
     }
 
-    private void validaCilindradas(int cilindradas) {
+    private void validaCilindradas(int cilindradas) throws ValorInvalidoException{
         if (cilindradas <= 0) {
             throw new ValorInvalidoException("Cilindradas devem ser maiores que zero.");
         }
     }
 
-    private void validaMarchas(int marchas) {
+    private void validaMarchas(int marchas) throws ValorInvalidoException{
         if (marchas <= 0) {
             throw new ValorInvalidoException("Número de marchas deve ser maior que zero.");
         }
