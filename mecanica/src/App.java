@@ -1,3 +1,6 @@
+
+import views.ClienteView;
+
 // João Vitor Lucini - 39026957
 // Tiago Moreno - 38034662
 // Leonardo Reis - 37770179
@@ -9,6 +12,7 @@ public class App {
         
         System.out.println("Bem-vindo ao Sistema de Gerenciamento da Mecânica!");
 
-        
+        ClienteView clienteView = new ClienteView();
+        clienteView.iniciar();
     }
 }

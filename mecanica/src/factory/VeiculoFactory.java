@@ -9,7 +9,7 @@ import model.enums.TipoServico;
 import util.Validador;
 
 public class VeiculoFactory {
-    public Carro criarCarro(boolean arCondicionado, boolean automatico, float motor, String tracao, int ano, String cor, String marca, String modelo, String placa, StatusServico status, TipoCombustivel tipoCombustivel, TipoServico tipoServico) throws ValorInvalidoException{
+    public Carro criarCarro(boolean arCondicionado, boolean automatico, float motor, String tracao, int ano, String cor, String marca, String modelo, String placa, StatusServico status, TipoCombustivel tipoCombustivel, TipoServico tipoServico) throws Exception{
         validaAno(ano);
         Validador.validaStringNaoVazia(cor, "Cor");
         Validador.validaStringNaoVazia(marca, "Marca");
@@ -21,7 +21,7 @@ public class VeiculoFactory {
         return new Carro(arCondicionado, automatico, motor, tracao, ano, cor, marca, modelo, placa, status, tipoCombustivel, tipoServico);
     }
 
-    public Moto criarMoto(boolean carda, int cilindradas, boolean freioABS, int numMarchas, boolean partidaEletrica, int ano, String cor, String marca, String modelo, String placa, StatusServico status, TipoCombustivel tipoCombustivel, TipoServico tipoServico) throws ValorInvalidoException{
+    public Moto criarMoto(boolean carda, int cilindradas, boolean freioABS, int numMarchas, boolean partidaEletrica, int ano, String cor, String marca, String modelo, String placa, StatusServico status, TipoCombustivel tipoCombustivel, TipoServico tipoServico) throws Exception{
         validaAno(ano);
         validaCilindradas(cilindradas);
         validaMarchas(numMarchas);

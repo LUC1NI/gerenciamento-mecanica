@@ -9,7 +9,7 @@ import util.Validador;
 
 public class PessoaFactory {
     public Funcionario criarFuncionario(String nome, String cpf, String telefone, String cargo, float salario,
-            List<Veiculo> veiculosResponsaveis) throws ValorInvalidoException{
+            List<Veiculo> veiculosResponsaveis) throws Exception{
         Validador.validaNome(nome);
         Validador.validaCpf(cpf);
         Validador.validarTelefone(telefone);
@@ -18,7 +18,7 @@ public class PessoaFactory {
         return new Funcionario(nome, cpf, telefone, cargo, salario, veiculosResponsaveis);
     }
 
-    public Cliente criarCliente(String nome, String cpf, String telefone, String endereco, List<Veiculo> veiculos) throws ValorInvalidoException{
+    public Cliente criarCliente(String nome, String cpf, String telefone, String endereco, List<Veiculo> veiculos) throws Exception{
         Validador.validaNome(nome);
         Validador.validaCpf(cpf);
         Validador.validarTelefone(telefone);

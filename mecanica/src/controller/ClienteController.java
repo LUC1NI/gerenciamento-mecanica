@@ -1,9 +1,11 @@
 package controller;
 
+import dal.ClienteDAO;
 import exception.ClienteNaoEncontradoException;
 import exception.ValorInvalidoException;
 import exception.VeiculoNaoEncontradoException;
 import factory.PessoaFactory;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -17,7 +19,7 @@ public class ClienteController {
         this.clientes = new ArrayList<>();
     }
 
-    public void cadastrarCliente(String nome, String cpf, String telefone, String endereco, List<Veiculo> veiculos) throws ValorInvalidoException {
+    public void cadastrarCliente(String nome, String cpf, String telefone, String endereco, List<Veiculo> veiculos) throws Exception {
         if (buscarClientePorCpf(cpf).isPresent()) {
         throw new ValorInvalidoException("Já existe um cliente cadastrado com o CPF " + cpf);
         }
@@ -72,5 +74,17 @@ public class ClienteController {
         }
     }
 
-    
+    public List<Veiculo> listarVeiculosDoCliente(String cpf) throws ClienteNaoEncontradoException {
+        Cliente cliente = buscarClientePorCpf(cpf)
+            .orElseThrow(() -> new ClienteNaoEncontradoException("Cliente com CPF " + cpf + " não encontrado."));
+        return cliente.getVeiculos();
+    }
+
+    public void salvar() throws IOException {
+        ClienteDAO.salvar(clientes);
+    }
+
+    public static List<Cliente> carregar() throws IOException, ClassNotFoundException{
+        return ClienteDAO.carregar();
+    }
 }
