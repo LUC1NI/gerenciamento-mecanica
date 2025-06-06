@@ -21,6 +21,16 @@ public class ClienteController {
         this.veiculoController = veiculoController;
     }
 
+    public void preloadClientes() {
+        try {
+            cadastrarCliente("João Silva", "12345678901", "11999999999", "Rua A, 123", new ArrayList<>());
+            cadastrarCliente("Maria Oliveira", "10987654321", "11988888888", "Rua B, 456", new ArrayList<>());
+            cadastrarCliente("Carlos Souza", "11122233344", "11977777777", "Rua C, 789", new ArrayList<>());
+        } catch (Exception e) {
+            System.out.println("Erro ao pré-carregar clientes: " + e.getMessage());
+        }
+    }
+
     public void cadastrarCliente(String nome, String cpf, String telefone, String endereco, List<Veiculo> veiculos) throws Exception {
         if (buscarClientePorCpf(cpf).isPresent()) {
         throw new ValorInvalidoException("Já existe um cliente cadastrado com o CPF " + cpf);

@@ -23,7 +23,6 @@ public class ClienteView {
     }
 
     public void iniciar() {
-        System.out.println("Bem-vindo à Mecânica! Seu sistema de gerenciamento de clientes e veículos.");
         boolean rodando = true;
 
         while (rodando) {
@@ -129,9 +128,32 @@ public class ClienteView {
             System.out.print("Placa: ");
             String placa = scanner.nextLine();
 
-            model.enums.StatusServico status = model.enums.StatusServico.PENDENTE;
-            model.enums.TipoCombustivel tipoCombustivel = model.enums.TipoCombustivel.FLEX;
-            model.enums.TipoServico tipoServico = model.enums.TipoServico.TROCA_OLEO;
+            // Select StatusServico
+            System.out.println("Selecione o Status do Serviço:");
+            model.enums.StatusServico[] statusValues = model.enums.StatusServico.values();
+            for (int i = 0; i < statusValues.length; i++) {
+                System.out.println("[" + (i + 1) + "] " + statusValues[i]);
+            }
+            int statusIndex = Integer.parseInt(scanner.nextLine()) - 1;
+            model.enums.StatusServico status = (statusIndex >= 0 && statusIndex < statusValues.length) ? statusValues[statusIndex] : model.enums.StatusServico.PENDENTE;
+
+            // Select TipoCombustivel
+            System.out.println("Selecione o Tipo de Combustível:");
+            model.enums.TipoCombustivel[] combustivelValues = model.enums.TipoCombustivel.values();
+            for (int i = 0; i < combustivelValues.length; i++) {
+                System.out.println("[" + (i + 1) + "] " + combustivelValues[i]);
+            }
+            int combustivelIndex = Integer.parseInt(scanner.nextLine()) - 1;
+            model.enums.TipoCombustivel tipoCombustivel = (combustivelIndex >= 0 && combustivelIndex < combustivelValues.length) ? combustivelValues[combustivelIndex] : model.enums.TipoCombustivel.FLEX;
+
+            // Select TipoServico
+            System.out.println("Selecione o Tipo de Serviço:");
+            model.enums.TipoServico[] servicoValues = model.enums.TipoServico.values();
+            for (int i = 0; i < servicoValues.length; i++) {
+                System.out.println("[" + (i + 1) + "] " + servicoValues[i]);
+            }
+            int servicoIndex = Integer.parseInt(scanner.nextLine()) - 1;
+            model.enums.TipoServico tipoServico = (servicoIndex >= 0 && servicoIndex < servicoValues.length) ? servicoValues[servicoIndex] : model.enums.TipoServico.TROCA_OLEO;
 
             if (tipoVeiculo.equals("1")) {
                 System.out.print("Tração: ");

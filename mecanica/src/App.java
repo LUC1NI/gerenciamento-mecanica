@@ -9,9 +9,6 @@ import views.MecanicaView;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        
-        System.out.println("Bem-vindo ao Sistema de Gerenciamento da Mecânica!");
-
         MecanicaView mecanicaView = new MecanicaView();
         mecanicaView.iniciar();
         
