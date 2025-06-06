@@ -1,6 +1,7 @@
 package views;
 
 import controller.ClienteController;
+import controller.VeiculoController;
 import exception.ClienteNaoEncontradoException;
 import exception.ValorInvalidoException;
 import java.util.ArrayList;
@@ -16,7 +17,8 @@ public class ClienteView {
     private final Scanner scanner;
 
     public ClienteView() {
-        this.clienteController = new ClienteController();
+        VeiculoController veiculoController = new VeiculoController();
+        this.clienteController = new ClienteController(veiculoController);
         this.scanner = new Scanner(System.in);
     }
 

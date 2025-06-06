@@ -29,7 +29,7 @@ public class Cliente extends Pessoa{
 
     @Override
     public String toString() {
-        return "Cliente "+ getNome() + endereco + "";
+        return "Cliente "+ getNome() + " " + endereco + "";
     }
 
 }

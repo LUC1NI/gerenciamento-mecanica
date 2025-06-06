@@ -12,8 +12,8 @@ public class FuncionarioView {
     private FuncionarioController funcionarioController;
     private Scanner scanner;
 
-    public FuncionarioView(FuncionarioController funcionarioController) throws Exception{
-        this.funcionarioController = funcionarioController;
+    public FuncionarioView() throws  Exception{
+        this.funcionarioController = new FuncionarioController();
         this.scanner = new Scanner(System.in);
     }
 
@@ -73,8 +73,6 @@ public class FuncionarioView {
             String cargo = scanner.nextLine();
             System.out.print("Salário: ");
             float salario = Float.parseFloat(scanner.nextLine());
-
-            Funcionario funcionario = new Funcionario(nome, cpf, telefone, cargo, salario, null);
             funcionarioController.cadastrarFuncionario(nome, cpf, telefone, cargo, salario, null);
             System.out.println("Funcionário cadastrado com sucesso!");
         } catch (Exception e) {
@@ -150,6 +148,14 @@ public class FuncionarioView {
         System.out.println("\n=== Gerenciar Veículos Responsáveis ===");
         System.out.print("Informe o CPF do funcionário: ");
         String cpf = scanner.nextLine();
+        if (cpf.length() != 11) {
+            System.out.println("CPF inválido. Deve conter exatamente 11 dígitos.");
+            return; 
+        }
+        if (!funcionarioController.buscarFuncionarioPorCpf(cpf).isPresent()) {
+            System.out.println("Funcionário com CPF " + cpf + " não encontrado.");
+            return; 
+        }
         try {
             while (true) {
                 System.out.println("\n1. Listar Veículos Responsáveis");
@@ -176,9 +182,9 @@ public class FuncionarioView {
                 }
             }
         } catch (FuncionarioNaoEncontradoException e) {
-            System.out.println("Funcionário não encontrado: " + e.getMessage());
+            System.err.println("Funcionário não encontrado: " + e.getMessage());;
         } catch (Exception e) {
-            System.out.println("Erro: " + e.getMessage());
+            System.err.println("Erro: " + e.getMessage());
         }
     }
 

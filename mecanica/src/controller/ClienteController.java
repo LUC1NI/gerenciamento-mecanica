@@ -14,9 +14,11 @@ import model.Veiculo;
 
 public class ClienteController {
     private final List<Cliente> clientes;
+    private final VeiculoController veiculoController;
 
-    public ClienteController() {
+    public ClienteController(VeiculoController veiculoController) {
         this.clientes = new ArrayList<>();
+        this.veiculoController = veiculoController;
     }
 
     public void cadastrarCliente(String nome, String cpf, String telefone, String endereco, List<Veiculo> veiculos) throws Exception {
@@ -51,10 +53,11 @@ public class ClienteController {
         return new ArrayList<>(clientes);
     }
 
-    public void adicionarVeiculoAoCliente(String cpf, Veiculo veiculo) throws ClienteNaoEncontradoException {
+    public void adicionarVeiculoAoCliente(String cpf, Veiculo veiculo) throws ClienteNaoEncontradoException, ValorInvalidoException {
         Optional<Cliente> clienteOpt = buscarClientePorCpf(cpf);
         if (clienteOpt.isPresent()) {
             Cliente cliente = clienteOpt.get();
+        veiculoController.cadastrarVeiculo(veiculo);
         cliente.adicionarVeiculo(veiculo);
         } else {
         throw new ClienteNaoEncontradoException("Cliente com CPF " + cpf + " não encontrado.");
@@ -65,10 +68,11 @@ public class ClienteController {
         Optional<Cliente> clienteOpt = buscarClientePorCpf(cpf);
         if (clienteOpt.isPresent()) {
             Cliente cliente = clienteOpt.get();
-            boolean removed = cliente.removerVeiculoPorPlaca(placa);
-            if (!removed) {
+            boolean removedFromCliente = cliente.removerVeiculoPorPlaca(placa);
+            if (!removedFromCliente) {
                 throw new VeiculoNaoEncontradoException("Veículo com placa " + placa + " não encontrado na lista do cliente.");
             }
+            veiculoController.removerVeiculo(placa);
         } else {
             throw new ClienteNaoEncontradoException("Cliente com CPF " + cpf + " não encontrado.");
         }
