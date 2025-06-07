@@ -2,6 +2,8 @@ package factory;
 
 import exception.ValorInvalidoException;
 import model.Carro;
+import model.Cliente;
+import model.Funcionario;
 import model.Moto;
 import model.enums.StatusServico;
 import model.enums.TipoCombustivel;
@@ -9,7 +11,9 @@ import model.enums.TipoServico;
 import util.Validador;
 
 public class VeiculoFactory {
-    public Carro criarCarro(boolean arCondicionado, boolean automatico, float motor, String tracao, int ano, String cor, String marca, String modelo, String placa, StatusServico status, TipoCombustivel tipoCombustivel, TipoServico tipoServico) throws Exception{
+    public Carro criarCarro(String modelo, String marca, String cor, String placa, int ano, StatusServico status,
+            TipoServico tipoServico, TipoCombustivel tipoCombustivel, Cliente cliente, Funcionario funcionario,
+            String tracao, boolean arCondicionado, boolean automatico, float motor) throws Exception{
         validaAno(ano);
         Validador.validaStringNaoVazia(cor, "Cor");
         Validador.validaStringNaoVazia(marca, "Marca");
@@ -18,10 +22,12 @@ public class VeiculoFactory {
         Validador.validaStringNaoVazia(tracao, "Tração");
         validaMotor(motor);
         validaEnums(status, tipoCombustivel, tipoServico);
-        return new Carro(arCondicionado, automatico, motor, tracao, ano, cor, marca, modelo, placa, status, tipoCombustivel, tipoServico);
+        return new Carro(modelo, marca, cor, placa, ano, status, tipoServico, tipoCombustivel, cliente, funcionario, tracao, arCondicionado, automatico, motor); 
     }
 
-    public Moto criarMoto(boolean carda, int cilindradas, boolean freioABS, int numMarchas, boolean partidaEletrica, int ano, String cor, String marca, String modelo, String placa, StatusServico status, TipoCombustivel tipoCombustivel, TipoServico tipoServico) throws Exception{
+    public Moto criarMoto(String modelo, String marca, String cor, String placa, int ano, StatusServico status,
+            TipoServico tipoServico, TipoCombustivel tipoCombustivel, Cliente cliente, Funcionario funcionario,
+            int cilindradas, int numMarchas, boolean freioABS, boolean carda, boolean partidaEletrica) throws Exception{
         validaAno(ano);
         validaCilindradas(cilindradas);
         validaMarchas(numMarchas);
@@ -30,7 +36,7 @@ public class VeiculoFactory {
         Validador.validaStringNaoVazia(modelo, "Modelo");
         Validador.validaStringNaoVazia(placa, "Placa");
         validaEnums(status, tipoCombustivel, tipoServico);
-        return new Moto(carda, cilindradas, freioABS, numMarchas, partidaEletrica, ano, cor, marca, modelo, placa, status, tipoCombustivel, tipoServico);
+        return new Moto(modelo, marca, cor, placa, ano, status, tipoServico, tipoCombustivel, cliente, funcionario, cilindradas, numMarchas, freioABS, carda, partidaEletrica);
     }
 
     private void validaAno(int ano) throws ValorInvalidoException{

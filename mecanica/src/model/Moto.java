@@ -9,12 +9,14 @@ public class Moto extends Veiculo{
     private int cilindradas, numMarchas;
     private boolean freioABS, carda, partidaEletrica;
 
-    public Moto(boolean carda, int cilindradas, boolean freioABS, int numMarchas, boolean partidaEletrica, int ano, String cor, String marca, String modelo, String placa, StatusServico status, TipoCombustivel tipoCombustivel, TipoServico tipoServico) {
-        super(ano, cor, marca, modelo, placa, status, tipoCombustivel, tipoServico);
-        this.carda = carda;
+    public Moto(String modelo, String marca, String cor, String placa, int ano, StatusServico status,
+            TipoServico tipoServico, TipoCombustivel tipoCombustivel, Cliente cliente, Funcionario funcionario,
+            int cilindradas, int numMarchas, boolean freioABS, boolean carda, boolean partidaEletrica) {
+        super(modelo, marca, cor, placa, ano, status, tipoServico, tipoCombustivel, cliente, funcionario);
         this.cilindradas = cilindradas;
-        this.freioABS = freioABS;
         this.numMarchas = numMarchas;
+        this.freioABS = freioABS;
+        this.carda = carda;
         this.partidaEletrica = partidaEletrica;
     }
 
@@ -63,7 +65,6 @@ public class Moto extends Veiculo{
     public boolean isPartidaEletrica() {return partidaEletrica;}
     public void setPartidaEletrica(boolean partidaEletrica) {this.partidaEletrica = partidaEletrica;}
     
-
     @Override
     public String toString() {
         return "Moto " + cilindradas + " Marchas " + numMarchas + " freioABS" + freioABS +

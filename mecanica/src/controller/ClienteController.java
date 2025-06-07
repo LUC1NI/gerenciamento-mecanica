@@ -3,59 +3,45 @@ package controller;
 import dal.ClienteDAO;
 import exception.ClienteNaoEncontradoException;
 import exception.ValorInvalidoException;
-import exception.VeiculoNaoEncontradoException;
 import factory.PessoaFactory;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import model.Cliente;
-import model.Veiculo;
 
 public class ClienteController {
     private final List<Cliente> clientes;
-    private final VeiculoController veiculoController;
 
-    public ClienteController(VeiculoController veiculoController) {
+    public ClienteController() {
         this.clientes = new ArrayList<>();
-        this.veiculoController = veiculoController;
     }
 
-    public void preloadClientes() {
-        try {
-            cadastrarCliente("João Silva", "12345678901", "11999999999", "Rua A, 123", new ArrayList<>());
-            cadastrarCliente("Maria Oliveira", "10987654321", "11988888888", "Rua B, 456", new ArrayList<>());
-            cadastrarCliente("Carlos Souza", "11122233344", "11977777777", "Rua C, 789", new ArrayList<>());
-        } catch (Exception e) {
-            System.out.println("Erro ao pré-carregar clientes: " + e.getMessage());
-        }
-    }
-
-    public void cadastrarCliente(String nome, String cpf, String telefone, String endereco, List<Veiculo> veiculos) throws Exception {
+    public void cadastrarCliente(String nome, String cpf, String telefone, String endereco) throws Exception {
         if (buscarClientePorCpf(cpf).isPresent()) {
-        throw new ValorInvalidoException("Já existe um cliente cadastrado com o CPF " + cpf);
+            throw new ValorInvalidoException("Já existe um cliente cadastrado com o CPF " + cpf);
         }
-        Cliente novoCliente = new PessoaFactory().criarCliente(nome, cpf, telefone, endereco, veiculos);
+        Cliente novoCliente = new PessoaFactory().criarCliente(nome, cpf, telefone, endereco);
         clientes.add(novoCliente);
     }
 
     public Optional<Cliente> buscarClientePorCpf(String cpf) {
         return clientes.stream()
-            .filter(c -> c.getCpf().equals(cpf))
-            .findFirst();
+                .filter(c -> c.getCpf().equals(cpf))
+                .findFirst();
     }
 
     public void atualizarCliente(String cpf, Cliente clienteAtualizado) throws ClienteNaoEncontradoException {
-        Cliente clienteExistente = buscarClientePorCpf(cpf)
-            .orElseThrow(() -> new ClienteNaoEncontradoException("Cliente com CPF " + cpf + " não encontrado."));
-        int index = clientes.indexOf(clienteExistente);
+        Cliente existente = buscarClientePorCpf(cpf)
+                .orElseThrow(() -> new ClienteNaoEncontradoException("Cliente com CPF " + cpf + " não encontrado."));
+        int index = clientes.indexOf(existente);
         clientes.set(index, clienteAtualizado);
     }
 
     public void removerCliente(String cpf) throws ClienteNaoEncontradoException {
         boolean removed = clientes.removeIf(c -> c.getCpf().equals(cpf));
-     if (!removed) {
-        throw new ClienteNaoEncontradoException("Cliente com CPF " + cpf + " não encontrado.");
+        if (!removed) {
+            throw new ClienteNaoEncontradoException("Cliente com CPF " + cpf + " não encontrado.");
         }
     }
 
@@ -63,42 +49,11 @@ public class ClienteController {
         return new ArrayList<>(clientes);
     }
 
-    public void adicionarVeiculoAoCliente(String cpf, Veiculo veiculo) throws ClienteNaoEncontradoException, ValorInvalidoException {
-        Optional<Cliente> clienteOpt = buscarClientePorCpf(cpf);
-        if (clienteOpt.isPresent()) {
-            Cliente cliente = clienteOpt.get();
-        veiculoController.cadastrarVeiculo(veiculo);
-        cliente.adicionarVeiculo(veiculo);
-        } else {
-        throw new ClienteNaoEncontradoException("Cliente com CPF " + cpf + " não encontrado.");
-        }
-    }
-
-    public void removerVeiculoDoClientePorPlaca(String cpf, String placa) throws ClienteNaoEncontradoException, VeiculoNaoEncontradoException {
-        Optional<Cliente> clienteOpt = buscarClientePorCpf(cpf);
-        if (clienteOpt.isPresent()) {
-            Cliente cliente = clienteOpt.get();
-            boolean removedFromCliente = cliente.removerVeiculoPorPlaca(placa);
-            if (!removedFromCliente) {
-                throw new VeiculoNaoEncontradoException("Veículo com placa " + placa + " não encontrado na lista do cliente.");
-            }
-            veiculoController.removerVeiculo(placa);
-        } else {
-            throw new ClienteNaoEncontradoException("Cliente com CPF " + cpf + " não encontrado.");
-        }
-    }
-
-    public List<Veiculo> listarVeiculosDoCliente(String cpf) throws ClienteNaoEncontradoException {
-        Cliente cliente = buscarClientePorCpf(cpf)
-            .orElseThrow(() -> new ClienteNaoEncontradoException("Cliente com CPF " + cpf + " não encontrado."));
-        return cliente.getVeiculos();
-    }
-
     public void salvar() throws IOException {
         ClienteDAO.salvar(clientes);
     }
 
-    public static List<Cliente> carregar() throws IOException, ClassNotFoundException{
+    public static List<Cliente> carregar() throws IOException, ClassNotFoundException {
         return ClienteDAO.carregar();
     }
 }

@@ -1,48 +1,94 @@
 package controller;
 
+import dal.VeiculoDAO;
 import exception.ValorInvalidoException;
 import exception.VeiculoNaoEncontradoException;
-import java.util.ArrayList;
+import factory.VeiculoFactory;
+import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
-import model.Veiculo;
+import java.util.Set;
+import model.Cliente;
+import model.Funcionario;
+import model.Moto;
+import model.Veiculo; 
+import model.enums.StatusServico;
+import model.enums.TipoCombustivel;
+import model.enums.TipoServico;
+import util.VeiculoRepository;
 
 public class VeiculoController {
-    private final List<Veiculo> veiculos;
+    private final VeiculoRepository veiculoRepository;
 
-    public VeiculoController() {
-        this.veiculos = new ArrayList<>();
+    public VeiculoController(VeiculoRepository veiculoRepository) {
+        this.veiculoRepository = veiculoRepository;
     }
 
-    public void cadastrarVeiculo(Veiculo veiculo) throws ValorInvalidoException {
-        if (buscarVeiculoPorPlaca(veiculo.getPlaca()).isPresent()) {
-            throw new ValorInvalidoException("Já existe um veículo cadastrado com a placa " + veiculo.getPlaca());
+    public void cadastrarCarro(String modelo, String marca, String cor, String placa, int ano,
+                                  StatusServico status, TipoServico tipoServico, TipoCombustivel tipoCombustivel,
+                                  Cliente cliente, Funcionario funcionario, String tracao, boolean arCondicionado,
+                                  boolean automatico, float motor) throws Exception {
+        Veiculo veiculo = new VeiculoFactory().criarCarro(modelo, marca, cor, placa, ano, status, tipoServico, 
+        tipoCombustivel, cliente, funcionario, tracao, arCondicionado, automatico, motor);
+        if (veiculoRepository.buscarPorPlaca(placa) != null) {
+            throw new ValorInvalidoException("Já existe um veículo cadastrado com essa placa.");
         }
-        veiculos.add(veiculo);
+        veiculoRepository.adicionar(veiculo);
     }
 
-    public Optional<Veiculo> buscarVeiculoPorPlaca(String placa) {
-        return veiculos.stream()
-                .filter(v -> v.getPlaca().equalsIgnoreCase(placa))
-                .findFirst();
-    }
-
-    public void atualizarVeiculo(String placa, Veiculo veiculoAtualizado) throws VeiculoNaoEncontradoException {
-        Veiculo existente = buscarVeiculoPorPlaca(placa)
-                .orElseThrow(() -> new VeiculoNaoEncontradoException("Veículo com placa " + placa + " não encontrado."));
-        int index = veiculos.indexOf(existente);
-        veiculos.set(index, veiculoAtualizado);
+    public void cadastrarMoto(String modelo, String marca, String cor, String placa, int ano,
+                              StatusServico status, TipoServico tipoServico, TipoCombustivel tipoCombustivel,
+                              Cliente cliente, Funcionario funcionario, int cilindradas, int numMarchas,
+                              boolean freioABS, boolean carda, boolean partidaEletrica) throws Exception {
+        Moto moto = new VeiculoFactory().criarMoto(modelo, marca, cor, placa, ano, status, tipoServico, tipoCombustivel, cliente, funcionario, cilindradas, numMarchas, freioABS, carda, partidaEletrica);
+        if (veiculoRepository.buscarPorPlaca(placa) != null) {
+            throw new ValorInvalidoException("Já existe um veículo cadastrado com essa placa.");
+        }
+        veiculoRepository.adicionar(moto);
     }
 
     public void removerVeiculo(String placa) throws VeiculoNaoEncontradoException {
-        boolean removed = veiculos.removeIf(v -> v.getPlaca().equalsIgnoreCase(placa));
-        if (!removed) {
+        boolean removido = veiculoRepository.removerPorPlaca(placa);
+        if (!removido) {
             throw new VeiculoNaoEncontradoException("Veículo com placa " + placa + " não encontrado.");
         }
     }
 
     public List<Veiculo> listarVeiculos() {
-        return new ArrayList<>(veiculos);
+        return veiculoRepository.listarTodos();
     }
-}
 
+    public Set<Cliente> getClientesUnicosPublic() {
+        Set<Cliente> clientes = new HashSet<>();
+        for (Veiculo v : veiculoRepository.listarTodos()) {
+            if (v.getCliente() != null) {
+                clientes.add(v.getCliente());
+            }
+        }
+        return clientes;
+    }
+
+    public Set<Funcionario> getFuncionariosUnicosPublic() {
+        Set<Funcionario> funcionarios = new HashSet<>();
+        for (Veiculo v : veiculoRepository.listarTodos()) {
+            if (v.getFuncionario() != null) {
+                funcionarios.add(v.getFuncionario());
+            }
+        }
+        return funcionarios;
+    }
+
+    public Veiculo buscarVeiculoPorPlaca(String placa) {
+        return veiculoRepository.buscarPorPlaca(placa);
+    }
+
+    public void salvar() throws IOException {
+        VeiculoDAO.salvar(veiculoRepository.listarTodos());
+    }
+
+    public void carregar() throws IOException, ClassNotFoundException {
+        List<Veiculo> veiculosCarregados = VeiculoDAO.carregar();
+        veiculoRepository.setVeiculos(veiculosCarregados);
+    }
+
+}

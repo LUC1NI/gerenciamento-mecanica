@@ -10,12 +10,14 @@ public class Carro extends Veiculo{
     private boolean arCondicionado, automatico;
     private float motor;
 
-    public Carro(boolean arCondicionado, boolean automatico, float motor, String tracao, int ano, String cor, String marca, String modelo, String placa, StatusServico status, TipoCombustivel tipoCombustivel, TipoServico tipoServico) {
-        super(ano, cor, marca, modelo, placa, status, tipoCombustivel, tipoServico);
+    public Carro(String modelo, String marca, String cor, String placa, int ano, StatusServico status,
+            TipoServico tipoServico, TipoCombustivel tipoCombustivel, Cliente cliente, Funcionario funcionario,
+            String tracao, boolean arCondicionado, boolean automatico, float motor) {
+        super(modelo, marca, cor, placa, ano, status, tipoServico, tipoCombustivel, cliente, funcionario);
+        this.tracao = tracao;
         this.arCondicionado = arCondicionado;
         this.automatico = automatico;
         this.motor = motor;
-        this.tracao = tracao;
     }
 
     @Override

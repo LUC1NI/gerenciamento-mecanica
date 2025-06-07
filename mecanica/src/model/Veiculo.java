@@ -12,16 +12,21 @@ public abstract class Veiculo implements Serializable{
     private StatusServico status;
     private TipoServico tipoServico;
     private TipoCombustivel tipoCombustivel;
+    private Cliente cliente;
+    private Funcionario funcionario;
 
-    protected Veiculo(int ano, String cor, String marca, String modelo, String placa, StatusServico status, TipoCombustivel tipoCombustivel, TipoServico tipoServico) {
-        this.ano = ano;
-        this.cor = cor;
-        this.marca = marca;
+    protected Veiculo(String modelo, String marca, String cor, String placa, int ano, StatusServico status,
+            TipoServico tipoServico, TipoCombustivel tipoCombustivel, Cliente cliente, Funcionario funcionario) {
         this.modelo = modelo;
+        this.marca = marca;
+        this.cor = cor;
         this.placa = placa;
+        this.ano = ano;
         this.status = status;
-        this.tipoCombustivel = tipoCombustivel;
         this.tipoServico = tipoServico;
+        this.tipoCombustivel = tipoCombustivel;
+        this.cliente = cliente;
+        this.funcionario = funcionario;
     }
 
     public abstract float calcularCustoEstimadoServico();
@@ -46,6 +51,10 @@ public abstract class Veiculo implements Serializable{
     public void setPlaca(String placa) {this.placa = placa;}
     public TipoServico getTipoServico() {return tipoServico;}
     public void setTipoServico(TipoServico tipoServico) {this.tipoServico = tipoServico;}
+    public Cliente getCliente() {return cliente;}
+    public void setCliente(Cliente cliente) {this.cliente = cliente;}
+    public Funcionario getFuncionario() {return funcionario;}
+    public void setFuncionario(Funcionario funcionario) {this.funcionario = funcionario;}
 
     @Override
     public String toString() {
