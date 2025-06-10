@@ -187,7 +187,8 @@ public class VeiculoConsoleView {
     }
 
     private Cliente selecionarOuCriarCliente() throws Exception {
-        var clientes = veiculoController.getClientesUnicosPublic();
+        List<Cliente> clientes = clienteController.listarClientes();
+
         if (clientes.isEmpty()) {
             System.out.println("Nenhum cliente encontrado. Por favor, crie um novo cliente.");
             return criarNovoCliente();
@@ -204,7 +205,7 @@ public class VeiculoConsoleView {
 
         int opcao = Integer.parseInt(scanner.nextLine());
         if (opcao >= 1 && opcao < i) {
-            return clientes.stream().skip(opcao - 1).findFirst().get();
+            return clientes.get(opcao - 1);
         } else if (opcao == i) {
             return criarNovoCliente();
         } else {
@@ -228,7 +229,8 @@ public class VeiculoConsoleView {
     }
 
     private Funcionario selecionarOuCriarFuncionario() throws Exception {
-        var funcionarios = veiculoController.getFuncionariosUnicosPublic();
+        List<Funcionario> funcionarios = funcionarioController.listarFuncionarios(); 
+
         if (funcionarios.isEmpty()) {
             System.out.println("Nenhum funcionário encontrado. Por favor, crie um novo funcionário.");
             return criarNovoFuncionario();
@@ -245,7 +247,7 @@ public class VeiculoConsoleView {
 
         int opcao = Integer.parseInt(scanner.nextLine());
         if (opcao >= 1 && opcao < i) {
-            return funcionarios.stream().skip(opcao - 1).findFirst().get();
+            return funcionarios.get(opcao - 1);
         } else if (opcao == i) {
             return criarNovoFuncionario();
         } else {
@@ -253,6 +255,7 @@ public class VeiculoConsoleView {
             return selecionarOuCriarFuncionario();
         }
     }
+
 
     private Funcionario criarNovoFuncionario() throws Exception {
         System.out.println("Criar novo funcionário:");

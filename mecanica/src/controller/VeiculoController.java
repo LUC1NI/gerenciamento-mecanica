@@ -24,10 +24,7 @@ public class VeiculoController {
         this.veiculoRepository = veiculoRepository;
     }
 
-    public void cadastrarCarro(String modelo, String marca, String cor, String placa, int ano,
-                                  StatusServico status, TipoServico tipoServico, TipoCombustivel tipoCombustivel,
-                                  Cliente cliente, Funcionario funcionario, String tracao, boolean arCondicionado,
-                                  boolean automatico, float motor) throws Exception {
+    public void cadastrarCarro(String modelo, String marca, String cor, String placa, int ano, StatusServico status, TipoServico tipoServico, TipoCombustivel tipoCombustivel, Cliente cliente, Funcionario funcionario, String tracao, boolean arCondicionado, boolean automatico, float motor) throws Exception {
         Veiculo veiculo = new VeiculoFactory().criarCarro(modelo, marca, cor, placa, ano, status, tipoServico, 
         tipoCombustivel, cliente, funcionario, tracao, arCondicionado, automatico, motor);
         if (veiculoRepository.buscarPorPlaca(placa) != null) {
@@ -36,10 +33,7 @@ public class VeiculoController {
         veiculoRepository.adicionar(veiculo);
     }
 
-    public void cadastrarMoto(String modelo, String marca, String cor, String placa, int ano,
-                              StatusServico status, TipoServico tipoServico, TipoCombustivel tipoCombustivel,
-                              Cliente cliente, Funcionario funcionario, int cilindradas, int numMarchas,
-                              boolean freioABS, boolean carda, boolean partidaEletrica) throws Exception {
+    public void cadastrarMoto(String modelo, String marca, String cor, String placa, int ano, StatusServico status, TipoServico tipoServico, TipoCombustivel tipoCombustivel, Cliente cliente, Funcionario funcionario, int cilindradas, int numMarchas, boolean freioABS, boolean carda, boolean partidaEletrica) throws Exception {
         Moto moto = new VeiculoFactory().criarMoto(modelo, marca, cor, placa, ano, status, tipoServico, tipoCombustivel, cliente, funcionario, cilindradas, numMarchas, freioABS, carda, partidaEletrica);
         if (veiculoRepository.buscarPorPlaca(placa) != null) {
             throw new ValorInvalidoException("Já existe um veículo cadastrado com essa placa.");
