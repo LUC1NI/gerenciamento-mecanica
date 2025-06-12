@@ -3,18 +3,17 @@ package model;
 import model.enums.StatusServico;
 import model.enums.TipoCombustivel;
 import model.enums.TipoServico;
+import model.enums.TipoTracao;
 
 public class Carro extends Veiculo{
     private static final long serialVersionUID = 1L;
-    private String tracao;
     private boolean arCondicionado, automatico;
     private float motor;
 
     public Carro(String modelo, String marca, String cor, String placa, int ano, StatusServico status,
-            TipoServico tipoServico, TipoCombustivel tipoCombustivel, Cliente cliente, Funcionario funcionario,
-            String tracao, boolean arCondicionado, boolean automatico, float motor) {
-        super(modelo, marca, cor, placa, ano, status, tipoServico, tipoCombustivel, cliente, funcionario);
-        this.tracao = tracao;
+            TipoServico tipoServico, TipoCombustivel tipoCombustivel, TipoTracao tipoTracao, Cliente cliente,
+            Funcionario funcionario, boolean arCondicionado, boolean automatico, float motor) {
+        super(modelo, marca, cor, placa, ano, status, tipoServico, tipoCombustivel, tipoTracao, cliente, funcionario);
         this.arCondicionado = arCondicionado;
         this.automatico = automatico;
         this.motor = motor;
@@ -41,13 +40,10 @@ public class Carro extends Veiculo{
     public String descricaoVeiculo(boolean detalhada) {
     if (detalhada) {
         return descricaoVeiculo();
-    } else {
+    }
         return getMarca() + " " + getModelo() + " - " + getPlaca();
-        }
     }
 
-    public String getTracao() {return tracao;}
-    public void setTracao(String tracao) {this.tracao = tracao;}
     public boolean isArCondicionado() {return arCondicionado;}
     public void setArCondicionado(boolean arCondicionado) {this.arCondicionado = arCondicionado;}
     public boolean isAutomatico() {return automatico;}
@@ -58,7 +54,7 @@ public class Carro extends Veiculo{
     @Override
     public String toString() {
     return "Carro {" +
-            "tracao=" + tracao +
+            "tracao=" + getTipoTracao() +
             ", arCondicionado=" + (arCondicionado ? "Sim" : "Não") +
             ", automatico=" + (automatico ? "Sim" : "Não") +
             ", motor=" + motor +

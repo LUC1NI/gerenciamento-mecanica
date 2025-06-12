@@ -4,6 +4,7 @@ import java.io.Serializable;
 import model.enums.StatusServico;
 import model.enums.TipoCombustivel;
 import model.enums.TipoServico;
+import model.enums.TipoTracao;
 
 public abstract class Veiculo implements Serializable{  
     private static final long serialVersionUID = 1L;
@@ -12,11 +13,13 @@ public abstract class Veiculo implements Serializable{
     private StatusServico status;
     private TipoServico tipoServico;
     private TipoCombustivel tipoCombustivel;
+    private TipoTracao tipoTracao;
     private Cliente cliente;
     private Funcionario funcionario;
 
     protected Veiculo(String modelo, String marca, String cor, String placa, int ano, StatusServico status,
-            TipoServico tipoServico, TipoCombustivel tipoCombustivel, Cliente cliente, Funcionario funcionario) {
+            TipoServico tipoServico, TipoCombustivel tipoCombustivel, TipoTracao tipoTracao, Cliente cliente,
+            Funcionario funcionario) {
         this.modelo = modelo;
         this.marca = marca;
         this.cor = cor;
@@ -25,6 +28,7 @@ public abstract class Veiculo implements Serializable{
         this.status = status;
         this.tipoServico = tipoServico;
         this.tipoCombustivel = tipoCombustivel;
+        this.tipoTracao = tipoTracao;
         this.cliente = cliente;
         this.funcionario = funcionario;
     }
@@ -55,6 +59,8 @@ public abstract class Veiculo implements Serializable{
     public void setCliente(Cliente cliente) {this.cliente = cliente;}
     public Funcionario getFuncionario() {return funcionario;}
     public void setFuncionario(Funcionario funcionario) {this.funcionario = funcionario;}
+    public TipoTracao getTipoTracao() {return tipoTracao;}
+    public void setTipoTracao(TipoTracao tipoTracao) {this.tipoTracao = tipoTracao;}
 
     @Override
     public String toString() {

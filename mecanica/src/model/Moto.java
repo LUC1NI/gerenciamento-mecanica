@@ -3,6 +3,7 @@ package model;
 import model.enums.StatusServico;
 import model.enums.TipoCombustivel;
 import model.enums.TipoServico;
+import model.enums.TipoTracao;
 
 public class Moto extends Veiculo{
     private static final long serialVersionUID = 1L;
@@ -10,9 +11,10 @@ public class Moto extends Veiculo{
     private boolean freioABS, carda, partidaEletrica;
 
     public Moto(String modelo, String marca, String cor, String placa, int ano, StatusServico status,
-            TipoServico tipoServico, TipoCombustivel tipoCombustivel, Cliente cliente, Funcionario funcionario,
-            int cilindradas, int numMarchas, boolean freioABS, boolean carda, boolean partidaEletrica) {
-        super(modelo, marca, cor, placa, ano, status, tipoServico, tipoCombustivel, cliente, funcionario);
+            TipoServico tipoServico, TipoCombustivel tipoCombustivel, TipoTracao tipoTracao, Cliente cliente,
+            Funcionario funcionario, int cilindradas, int numMarchas, boolean freioABS, boolean carda,
+            boolean partidaEletrica) {
+        super(modelo, marca, cor, placa, ano, status, tipoServico, tipoCombustivel, tipoTracao, cliente, funcionario);
         this.cilindradas = cilindradas;
         this.numMarchas = numMarchas;
         this.freioABS = freioABS;
@@ -49,9 +51,8 @@ public class Moto extends Veiculo{
     public String descricaoVeiculo(boolean detalhada) {
         if (detalhada) {
             return descricaoVeiculo(); 
-        } else {
+        } 
             return getMarca() + " " + getModelo() + " (" + getPlaca() + ")";
-        }
     }
 
     public int getCilindradas() {return cilindradas;}

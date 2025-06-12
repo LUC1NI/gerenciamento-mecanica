@@ -15,6 +15,7 @@ import model.Veiculo;
 import model.enums.StatusServico;
 import model.enums.TipoCombustivel;
 import model.enums.TipoServico;
+import model.enums.TipoTracao;
 import util.VeiculoRepository;
 
 public class VeiculoController {
@@ -24,17 +25,19 @@ public class VeiculoController {
         this.veiculoRepository = veiculoRepository;
     }
 
-    public void cadastrarCarro(String modelo, String marca, String cor, String placa, int ano, StatusServico status, TipoServico tipoServico, TipoCombustivel tipoCombustivel, Cliente cliente, Funcionario funcionario, String tracao, boolean arCondicionado, boolean automatico, float motor) throws Exception {
-        Veiculo veiculo = new VeiculoFactory().criarCarro(modelo, marca, cor, placa, ano, status, tipoServico, 
-        tipoCombustivel, cliente, funcionario, tracao, arCondicionado, automatico, motor);
+    public void cadastrarCarro(String modelo, String marca, String cor, String placa, int ano, StatusServico status,TipoServico tipoServico, TipoCombustivel tipoCombustivel, TipoTracao tipoTracao, Cliente cliente,
+    Funcionario funcionario, boolean arCondicionado, boolean automatico, float motor) throws Exception {
+        Veiculo veiculo = new VeiculoFactory().criarCarro(modelo, marca, cor, placa, ano, status, tipoServico, tipoCombustivel, tipoTracao, cliente, funcionario, arCondicionado, automatico, motor);
         if (veiculoRepository.buscarPorPlaca(placa) != null) {
             throw new ValorInvalidoException("Já existe um veículo cadastrado com essa placa.");
         }
         veiculoRepository.adicionar(veiculo);
     }
 
-    public void cadastrarMoto(String modelo, String marca, String cor, String placa, int ano, StatusServico status, TipoServico tipoServico, TipoCombustivel tipoCombustivel, Cliente cliente, Funcionario funcionario, int cilindradas, int numMarchas, boolean freioABS, boolean carda, boolean partidaEletrica) throws Exception {
-        Moto moto = new VeiculoFactory().criarMoto(modelo, marca, cor, placa, ano, status, tipoServico, tipoCombustivel, cliente, funcionario, cilindradas, numMarchas, freioABS, carda, partidaEletrica);
+    public void cadastrarMoto(String modelo, String marca, String cor, String placa, int ano, StatusServico status,TipoServico tipoServico, TipoCombustivel tipoCombustivel, TipoTracao tipoTracao, Cliente cliente,
+    Funcionario funcionario, int cilindradas, int numMarchas, boolean freioABS, boolean carda,
+    boolean partidaEletrica) throws Exception {
+        Moto moto = new VeiculoFactory().criarMoto(modelo, marca, cor, placa, ano, status, tipoServico, tipoCombustivel, tipoTracao, cliente, funcionario, cilindradas, numMarchas, freioABS, carda, partidaEletrica);
         if (veiculoRepository.buscarPorPlaca(placa) != null) {
             throw new ValorInvalidoException("Já existe um veículo cadastrado com essa placa.");
         }

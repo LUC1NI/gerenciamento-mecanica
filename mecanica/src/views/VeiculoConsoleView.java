@@ -106,17 +106,15 @@ public class VeiculoConsoleView {
         model.enums.StatusServico statusServico = escolherStatusServico();
         model.enums.TipoServico tipoServico = escolherTipoServico();
         model.enums.TipoCombustivel tipoCombustivel = escolherTipoCombustivel();
+        model.enums.TipoTracao tipoTracao = escolherTipoTracao();
         if (tipoVeiculo.equals("1")) {
-            System.out.print("Tração (ex: 4x2): ");
-            String tracao = scanner.nextLine();
             System.out.print("Tem ar condicionado? (s/n): ");
             boolean arCondicionado = scanner.nextLine().trim().equalsIgnoreCase("s");
             System.out.print("É automático? (s/n): ");
             boolean automatico = scanner.nextLine().trim().equalsIgnoreCase("s");
             System.out.print("Potência do motor (ex: 1.6): ");
             float motor = Float.parseFloat(scanner.nextLine());
-            veiculoController.cadastrarCarro(modelo, marca, cor, placa, ano, statusServico, tipoServico,
-                    tipoCombustivel, cliente, funcionario, tracao, arCondicionado, automatico, motor);
+            veiculoController.cadastrarCarro(modelo, marca, cor, placa, ano, statusServico, tipoServico, tipoCombustivel, tipoTracao, cliente, funcionario, arCondicionado, automatico, motor);
         } else if (tipoVeiculo.equals("2")) {
             System.out.print("Cilindradas: ");
             int cilindradas = Integer.parseInt(scanner.nextLine());
@@ -128,8 +126,7 @@ public class VeiculoConsoleView {
             boolean carda = scanner.nextLine().trim().equalsIgnoreCase("s");
             System.out.print("Tem partida elétrica? (s/n): ");
             boolean partidaEletrica = scanner.nextLine().trim().equalsIgnoreCase("s");
-            veiculoController.cadastrarMoto(modelo, marca, cor, placa, ano, statusServico, tipoServico,
-                    tipoCombustivel, cliente, funcionario, cilindradas, numMarchas, freioABS, carda, partidaEletrica);
+            veiculoController.cadastrarMoto(modelo, marca, cor, placa, ano, statusServico, tipoServico, tipoCombustivel, tipoTracao, cliente, funcionario, cilindradas, numMarchas, freioABS, carda, partidaEletrica);
         } else {
             System.out.println("Tipo de veículo inválido. Cadastro cancelado.");
             return;
@@ -183,6 +180,21 @@ public class VeiculoConsoleView {
         } catch (IllegalArgumentException e) {
             System.out.println("Opção inválida, será usado padrão FLEX");
             return model.enums.TipoCombustivel.FLEX;
+        }
+    }
+
+    private model.enums.TipoTracao escolherTipoTracao() {
+        System.out.println("\nEscolha o tipo da Tração:");
+        for (model.enums.TipoTracao tracao : model.enums.TipoTracao.values()) {
+            System.out.println(tracao.getId() + ". " + tracao.getDescricao());
+        }
+        System.out.print("Opção: ");
+        int op = Integer.parseInt(scanner.nextLine());
+        try {
+            return model.enums.TipoTracao.getIdTipoTracao(op);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Opção inválida, será usado padrão 4x2");
+            return model.enums.TipoTracao.QUATROXDOIS;
         }
     }
 
