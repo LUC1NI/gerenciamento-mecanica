@@ -157,7 +157,8 @@ public class VeiculoConsoleView {
         System.out.println("\nEscolha o tipo de serviço:");
         model.enums.TipoServico[] servicos = model.enums.TipoServico.values();
         for (int i = 0; i < servicos.length; i++) {
-            System.out.println((i + 1) + ". " + servicos[i].getDescricao());
+            System.out.printf("%d. %s - R$ %.2f\n", 
+                (i + 1), servicos[i].getDescricao(), servicos[i].getPrecoBase());
         }
         System.out.print("Opção: ");
         int op = Integer.parseInt(scanner.nextLine());
@@ -167,6 +168,7 @@ public class VeiculoConsoleView {
         System.out.println("Opção inválida, será usado padrão TROCA_OLEO");
         return model.enums.TipoServico.TROCA_OLEO;
     }
+
 
     private model.enums.TipoCombustivel escolherTipoCombustivel() {
         System.out.println("\nEscolha o tipo de combustível:");
