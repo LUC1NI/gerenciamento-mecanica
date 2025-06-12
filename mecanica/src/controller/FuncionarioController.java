@@ -13,8 +13,8 @@ import model.Funcionario;
 public class FuncionarioController {
     private final List<Funcionario> funcionarios;
 
-    public FuncionarioController() {
-        this.funcionarios = new ArrayList<>();
+    public FuncionarioController(List<Funcionario> funcionarios) {
+        this.funcionarios = funcionarios;
     }
 
     public void cadastrarFuncionario(String nome, String cpf, String telefone, String cargo, float salario) throws Exception {

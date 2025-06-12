@@ -7,17 +7,20 @@
 import controller.ClienteController;
 import controller.FuncionarioController;
 import controller.VeiculoController;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 import model.Cliente;
 import model.Funcionario;
+import model.Veiculo;
 import util.VeiculoRepository;
 import views.MenuPrincipalView;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        ClienteController clienteController = new ClienteController();
-        FuncionarioController funcionarioController = new FuncionarioController();
-        VeiculoRepository veiculoRepository = new VeiculoRepository();
+        ClienteController clienteController = new ClienteController(new ArrayList<Cliente>());
+        FuncionarioController funcionarioController = new FuncionarioController(new ArrayList<Funcionario>());
+        VeiculoRepository veiculoRepository = new VeiculoRepository(new ArrayList<Veiculo>());
         VeiculoController veiculoController = new VeiculoController(veiculoRepository);
 
         try {

@@ -1,6 +1,5 @@
 package util;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import model.Cliente;
@@ -8,7 +7,11 @@ import model.Funcionario;
 import model.Veiculo;
 
 public class VeiculoRepository {
-    private List<Veiculo> veiculos = new ArrayList<>();
+    private List<Veiculo> veiculos;
+    
+    public VeiculoRepository(List<Veiculo> veiculos) {
+        this.veiculos = veiculos;
+    }
 
     public void adicionar(Veiculo v) {
         veiculos.add(v);

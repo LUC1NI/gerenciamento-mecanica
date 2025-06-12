@@ -13,8 +13,8 @@ import model.Cliente;
 public class ClienteController {
     private final List<Cliente> clientes;
 
-    public ClienteController() {
-        this.clientes = new ArrayList<>();
+    public ClienteController(List<Cliente> clientes) {
+        this.clientes = clientes;
     }
 
     public void cadastrarCliente(String nome, String cpf, String telefone, String endereco) throws Exception {
