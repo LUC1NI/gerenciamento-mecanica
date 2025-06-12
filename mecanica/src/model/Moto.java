@@ -4,8 +4,9 @@ import model.enums.StatusServico;
 import model.enums.TipoCombustivel;
 import model.enums.TipoServico;
 import model.enums.TipoTracao;
+import model.interfaces.IVeiculo;
 
-public class Moto extends Veiculo{
+public class Moto extends Veiculo implements IVeiculo{
     private static final long serialVersionUID = 1L;
     private int cilindradas, numMarchas;
     private boolean freioABS, carda, partidaEletrica;
@@ -20,6 +21,11 @@ public class Moto extends Veiculo{
         this.freioABS = freioABS;
         this.carda = carda;
         this.partidaEletrica = partidaEletrica;
+    }
+
+    @Override
+    public String verificarChecklistBasico() {
+        return "Checklist da moto: Óleo OK, Freios OK, Freio ABS " + (freioABS ? "OK" : "Não disponível") + ".";
     }
 
     @Override

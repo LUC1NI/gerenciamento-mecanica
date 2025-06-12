@@ -4,8 +4,9 @@ import model.enums.StatusServico;
 import model.enums.TipoCombustivel;
 import model.enums.TipoServico;
 import model.enums.TipoTracao;
+import model.interfaces.IVeiculo;
 
-public class Carro extends Veiculo{
+public class Carro extends Veiculo implements IVeiculo{
     private static final long serialVersionUID = 1L;
     private boolean arCondicionado, automatico;
     private float motor;
@@ -17,6 +18,11 @@ public class Carro extends Veiculo{
         this.arCondicionado = arCondicionado;
         this.automatico = automatico;
         this.motor = motor;
+    }
+
+    @Override
+    public String verificarChecklistBasico() {
+        return "Checklist do carro: Óleo OK, Freios OK, Ar-condicionado OK.";
     }
 
     @Override
