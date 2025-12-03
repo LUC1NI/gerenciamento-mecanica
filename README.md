@@ -70,7 +70,7 @@ src/
 
 Este projeto foi desenvolvido por:
 
-- **João Vitor Lucini** -
+- **João Vitor Lucini** 
 
 ---
 *Desenvolvido com fins acadêmicos para a disciplina de Programação Orientada a Objetos.*
