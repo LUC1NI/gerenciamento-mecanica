@@ -24,6 +24,8 @@ O sistema conta com um **Menu Principal** interativo via console, oferecendo as 
 
 ## 📂 Estrutura do Projeto
 
+Arquitetura desacoplada visando fácil manutenção e escalabilidade.
+
 A estrutura do código fonte está organizada da seguinte forma:
 
 ```
@@ -73,4 +75,4 @@ Este projeto foi desenvolvido por:
 - **João Vitor Lucini** 
 
 ---
-*Desenvolvido com fins acadêmicos para a disciplina de Programação Orientada a Objetos.*
+*Projeto desenvolvido para aplicação prática de padrões de projeto (MVC, DAO) e conceitos avançados de Orientação a Objetos (Polimorfismo, Herança).*
