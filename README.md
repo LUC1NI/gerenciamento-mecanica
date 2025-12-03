@@ -70,11 +70,7 @@ src/
 
 Este projeto foi desenvolvido por:
 
-- **João Vitor Lucini** - 39026957
-- **Tiago Moreno** - 38034662
-- **Leonardo Reis** - 37770179
-- **Gabriel Benites** - 38841142
-- **Felipe Pinheiro** - 38325969
+- **João Vitor Lucini** -
 
 ---
 *Desenvolvido com fins acadêmicos para a disciplina de Programação Orientada a Objetos.*
