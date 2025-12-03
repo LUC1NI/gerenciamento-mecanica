@@ -2,13 +2,15 @@ package com.oficina.gerenciamento.entity;
 
 import java.math.BigDecimal;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.oficina.gerenciamento.enums.StatusServico;
 import com.oficina.gerenciamento.enums.TipoCombustivel;
 import com.oficina.gerenciamento.enums.TipoServico;
-import com.oficina.gerenciamento.enums.TipoTracao; // Importa todas as anotações do JPA
+import com.oficina.gerenciamento.enums.TipoTracao; 
 
 import jakarta.persistence.DiscriminatorColumn;
-import jakarta.persistence.Entity; // Importante para dinheiro
+import jakarta.persistence.Entity; 
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
@@ -23,7 +25,17 @@ import lombok.Data;
 @Data
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE) 
-@DiscriminatorColumn(name = "tipo_veiculo") 
+@DiscriminatorColumn(name = "tipo_veiculo")
+@JsonTypeInfo(
+    use = JsonTypeInfo.Id.NAME, 
+    include = JsonTypeInfo.As.PROPERTY, 
+    property = "tipo_veiculo", 
+    visible = true
+)
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = Carro.class, name = "CARRO"),
+    @JsonSubTypes.Type(value = Moto.class, name = "MOTO")
+}) 
 public abstract class Veiculo {
 
     @Id
