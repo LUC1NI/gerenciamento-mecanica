@@ -17,6 +17,8 @@ import com.oficina.gerenciamento.dto.FuncionarioResponseDTO;
 import com.oficina.gerenciamento.entity.Funcionario;
 import com.oficina.gerenciamento.repository.FuncionarioRepository;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/funcionarios")
 public class FuncionarioController {
@@ -34,7 +36,7 @@ public class FuncionarioController {
     }
 
     @PostMapping
-    public ResponseEntity<FuncionarioResponseDTO> cadastrar(@RequestBody FuncionarioRequestDTO request) {
+    public ResponseEntity<FuncionarioResponseDTO> cadastrar(@RequestBody @Valid FuncionarioRequestDTO request) {
         
         Funcionario funcionarioParaSalvar = request.toEntity();
         

@@ -29,12 +29,8 @@ public class VeiculoController {
 
     @PostMapping
     public ResponseEntity<?> cadastrar(@RequestBody Veiculo veiculo) {
-        try {
-            Veiculo novoVeiculo = service.cadastrar(veiculo);
-            return ResponseEntity.ok(novoVeiculo);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+        Veiculo novoVeiculo = service.cadastrar(veiculo);
+        return ResponseEntity.ok(novoVeiculo);
     }
 
     @GetMapping("/{placa}")
@@ -50,7 +46,6 @@ public class VeiculoController {
             service.deletar(id);
             return ResponseEntity.noContent().build();
         } catch (IllegalArgumentException e) {
-            // Se tentar deletar algo que não existe
             return ResponseEntity.notFound().build();
         }
     }
