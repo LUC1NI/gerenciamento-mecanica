@@ -27,6 +27,4 @@ public enum TipoCombustivel {
         throw new IllegalArgumentException("Id não encontrado: " + id);
     }
 
-    @Override
-    public String toString() {return nome;}
 }

@@ -24,7 +24,4 @@ public enum TipoTracao {
         }
         throw new IllegalArgumentException("Id não encontrado: " + id);
     }
-
-    @Override
-    public String toString() {return descricao;}
 }

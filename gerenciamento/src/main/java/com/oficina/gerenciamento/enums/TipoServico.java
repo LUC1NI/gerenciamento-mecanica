@@ -31,6 +31,4 @@ public enum TipoServico {
         throw new IllegalArgumentException("Serviço não encontrado: " + descricao);
     }
 
-    @Override
-    public String toString() {return descricao + " (R$ " + precoBase + ")";}
 }

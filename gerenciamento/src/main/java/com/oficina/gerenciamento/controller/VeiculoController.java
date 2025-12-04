@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.oficina.gerenciamento.entity.Veiculo;
+import com.oficina.gerenciamento.repository.ClienteRepository;
+import com.oficina.gerenciamento.repository.FuncionarioRepository;
 import com.oficina.gerenciamento.repository.VeiculoRepository;
 
 @RestController
@@ -23,6 +25,12 @@ public class VeiculoController {
     @Autowired
     private VeiculoRepository repository;
 
+    @Autowired
+    private ClienteRepository clienteRepository;
+
+    @Autowired
+    private FuncionarioRepository funcionarioRepository;
+
     @GetMapping
     public List<Veiculo> listarTodos() {
         return repository.findAll();
@@ -31,9 +39,17 @@ public class VeiculoController {
     @PostMapping
     public ResponseEntity<?> cadastrar(@RequestBody Veiculo veiculo) {
         Optional<Veiculo> veiculoExistente = repository.findByPlaca(veiculo.getPlaca());
-        
+
         if (veiculoExistente.isPresent()) {
             return ResponseEntity.badRequest().body("Erro: Já existe um veículo com a placa " + veiculo.getPlaca());
+        }
+
+        if (veiculo.getCliente() != null && !clienteRepository.existsById(veiculo.getCliente().getId())) {
+            return ResponseEntity.badRequest().body("Erro: Cliente com ID " + veiculo.getCliente().getId() + " não existe.");
+        }
+
+        if (veiculo.getFuncionario() != null && !funcionarioRepository.existsById(veiculo.getFuncionario().getId())) {
+            return ResponseEntity.badRequest().body("Erro: Funcionario com ID " + veiculo.getFuncionario().getId() + " não existe.");
         }
 
         Veiculo novoVeiculo = repository.save(veiculo);
