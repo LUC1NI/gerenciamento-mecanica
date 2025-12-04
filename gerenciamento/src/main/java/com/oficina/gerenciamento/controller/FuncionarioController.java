@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.oficina.gerenciamento.dto.FuncionarioRequestDTO;
+import com.oficina.gerenciamento.dto.FuncionarioResponseDTO;
 import com.oficina.gerenciamento.entity.Funcionario;
 import com.oficina.gerenciamento.repository.FuncionarioRepository;
 
@@ -19,17 +21,26 @@ import com.oficina.gerenciamento.repository.FuncionarioRepository;
 @RequestMapping("/funcionarios")
 public class FuncionarioController {
 
+
     @Autowired
     private FuncionarioRepository repository;
 
     @GetMapping
-    public List<Funcionario> listarTodos() {
-        return repository.findAll();
+    public List<FuncionarioResponseDTO> listarTodos() {
+        List<Funcionario> funcionarios = repository.findAll();
+        return funcionarios.stream()
+                .map(FuncionarioResponseDTO::new)
+                .toList();
     }
 
     @PostMapping
-    public Funcionario cadastrar(@RequestBody Funcionario funcionario) {
-        return repository.save(funcionario);
+    public ResponseEntity<FuncionarioResponseDTO> cadastrar(@RequestBody FuncionarioRequestDTO request) {
+        
+        Funcionario funcionarioParaSalvar = request.toEntity();
+        
+        Funcionario funcionarioSalvo = repository.save(funcionarioParaSalvar);
+        
+        return ResponseEntity.ok(new FuncionarioResponseDTO(funcionarioSalvo));
     }
     
     @GetMapping("/{id}")
