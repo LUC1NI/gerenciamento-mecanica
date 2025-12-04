@@ -1,7 +1,6 @@
 package com.oficina.gerenciamento.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,61 +13,45 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.oficina.gerenciamento.entity.Veiculo;
-import com.oficina.gerenciamento.repository.ClienteRepository;
-import com.oficina.gerenciamento.repository.FuncionarioRepository;
-import com.oficina.gerenciamento.repository.VeiculoRepository;
+import com.oficina.gerenciamento.service.VeiculoService;
 
 @RestController
 @RequestMapping("/veiculos")
 public class VeiculoController {
 
     @Autowired
-    private VeiculoRepository repository;
-
-    @Autowired
-    private ClienteRepository clienteRepository;
-
-    @Autowired
-    private FuncionarioRepository funcionarioRepository;
+    private VeiculoService service;
 
     @GetMapping
     public List<Veiculo> listarTodos() {
-        return repository.findAll();
+        return service.listarTodos();
     }
 
     @PostMapping
     public ResponseEntity<?> cadastrar(@RequestBody Veiculo veiculo) {
-        Optional<Veiculo> veiculoExistente = repository.findByPlaca(veiculo.getPlaca());
-
-        if (veiculoExistente.isPresent()) {
-            return ResponseEntity.badRequest().body("Erro: Já existe um veículo com a placa " + veiculo.getPlaca());
+        try {
+            Veiculo novoVeiculo = service.cadastrar(veiculo);
+            return ResponseEntity.ok(novoVeiculo);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
-
-        if (veiculo.getCliente() != null && !clienteRepository.existsById(veiculo.getCliente().getId())) {
-            return ResponseEntity.badRequest().body("Erro: Cliente com ID " + veiculo.getCliente().getId() + " não existe.");
-        }
-
-        if (veiculo.getFuncionario() != null && !funcionarioRepository.existsById(veiculo.getFuncionario().getId())) {
-            return ResponseEntity.badRequest().body("Erro: Funcionario com ID " + veiculo.getFuncionario().getId() + " não existe.");
-        }
-
-        Veiculo novoVeiculo = repository.save(veiculo);
-        return ResponseEntity.ok(novoVeiculo);
     }
 
     @GetMapping("/{placa}")
     public ResponseEntity<Veiculo> buscarPorPlaca(@PathVariable String placa) {
-        return repository.findByPlaca(placa)
+        return service.buscarPorPlaca(placa)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> remover(@PathVariable Long id) {
-        if (repository.existsById(id)) {
-            repository.deleteById(id);
+        try {
+            service.deletar(id);
             return ResponseEntity.noContent().build();
+        } catch (IllegalArgumentException e) {
+            // Se tentar deletar algo que não existe
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.notFound().build();
     }
 }
